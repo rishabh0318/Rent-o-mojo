@@ -1,47 +1,65 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-function AutoPlay() {
-    const[slider,setSlider]=useState([
-     {
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSYmd2ZTgnzgC7tT6tssiEquGimjk5CnJTPA&s",
-     },
-     {
-      img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9ZOaQSvyvSXjmQwFzAZ1FfhlLrK2Og2U9Kw&s",
-     },
-     {
-        img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwiiIe22y4kOZStXKkZ0zfQx5lDYc2heFFbg&s",
-      },
-      {
-        img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHmW_4CBM28fW03jX_dq2prsXdWtXd2MRExg&s",
-      },
-      {
-        img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvnhsFYf74WgzRDPiROBcCW4cQJTwi3CwypQ&s",
-      },
-      {
-        img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzX9cW6qhHQ4cqewxViRIaE0NcYvYojj_pWA&s",
+
+export default function SimpleSlider() {
+  const[data,setData]=useState([])
+  useEffect(()=>{
+    const fetchData=async()=>{
+    try {
+      const api = await fetch("https://x8ki-letl-twmt.n7.xano.io/api:uhK746lq/laptopdb");
+      if (!api.ok) {
+        throw new Error(`Error: ${api.status}`); // Handle HTTP errors
       }
-    ])
-  const settings = {
+  
+      const data1 = await api.json();
+      const t= JSON.stringify(data1);
+      //console.log(data1);  Log the full response first
+      
+      
+      // Uncomment this if `title` exists in the response structure
+      // console.log(data1.title); 
+    } catch (error) {
+      console.error("Error fetching data:", error); // Catch and log any error
+    }
+  };
+   // const fetchData=async()=>{
+    //  const api= await fetch("https://x8ki-letl-twmt.n7.xano.io/api:uhK746lq/laptopdb")
+    //  const data1= await api.json();
+    
+    //  console.log(data1.title);
+   // }
+
+    fetchData();
+  },[])
+  var settings = {
     dots: true,
     infinite: true,
-    slidesToShow: 3,
+    speed: 500,
+    slidesToShow: 1,
     slidesToScroll: 1,
-     autoplay: true,
-    speed: 2000,
-    autoplaySpeed: 1000,
-    cssEase: "linear"
   };
   return (
-    <div className="slider-container" style={{width:"90%",margin:"auto"}}>
-      <Slider {...settings}>
-      {slider.map((slide)=><div key={slide}>
-        <img src={slide.img} style={{height:"250px",width:"300px" ,margin:"auto",borderRadius:"10px",border:"3px solid black"}}/>
-      </div>)}
-      </Slider>
-    </div>
+    <Slider {...settings}>
+      <div>
+        <h3></h3>
+      </div>
+      <div>
+        <h3>2</h3>
+      </div>
+      <div>
+        <h3>3</h3>
+      </div>
+      <div>
+        <h3>4</h3>
+      </div>
+      <div>
+        <h3>5</h3>
+      </div>
+      <div>
+        <h3>6</h3>
+      </div>
+    </Slider>
   );
 }
-
-export default AutoPlay;
